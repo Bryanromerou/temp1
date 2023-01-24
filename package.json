@@ -10,9 +10,19 @@
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "bootstrap": "^5.2.3",
+    "cross-env": "^7.0.3",
+    "node-plop": "0.25.0",
+    "plop": "2.6.0",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
+    "shelljs": "0.8.3",
+    "ts-node": "8.8.2",
     "typescript": "^4.9.4",
     "web-vitals": "^2.1.4"
   },
@@ -20,7 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eslint": "eslint --ext js,ts,tsx",
+    "generate": "cross-env TS_NODE_PROJECT='./internals/ts-node.tsconfig.json' plop --plopfile internals/generators/plopfile.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +50,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "plop": "^3.1.1"
   }
 }
