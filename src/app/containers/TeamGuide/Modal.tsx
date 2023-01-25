@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal as BootstrapModal } from "react-bootstrap";
+import { Modal as BootstrapModal, Container } from "react-bootstrap";
 import { ModalType } from "./types";
 import { ModuleInterface } from "app/components/Modules/types";
 import Section from "app/components/Modules/Section";
@@ -38,7 +38,7 @@ export default function Modal({
 
   return (
     <BootstrapModal size={"xl"} onHide={onHide} show>
-      {getModalContent()}
+      <Container>{getModalContent()}</Container>
     </BootstrapModal>
   );
 }

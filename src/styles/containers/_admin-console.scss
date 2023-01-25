@@ -1,0 +1,14 @@
+@use "../global-variables" as *;
+
+.admin-console-table-header{
+  font-weight: 700;
+  min-width: 116px;
+}
+
+.admin-console-table-card{
+  .preview-toggle {
+    color: $dark-blue-3;
+    display: inline;
+    font-weight: 400;
+  }
+}

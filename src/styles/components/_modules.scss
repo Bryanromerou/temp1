@@ -1,0 +1,51 @@
+@use "../global-variables" as *;
+
+.module-type {
+  font-weight: 700;
+  font-size: 12px;
+  text-align: right;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+}
+
+.module-type.FreeText {
+  color: #166669;
+  background: #D5F5F6;
+}
+
+.module-type.ShortList,
+.module-type.List {
+  color: #7F2D1C;
+  background: #FFDED7;
+}
+
+.module-type.LongList {
+  color: #6A002B;
+  background: #F7CCDD;
+}
+
+.module-title {
+  color: $dark-blue-1;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.module-title.editing {
+  background: #F5F7FC;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 8px 12px;
+}
+
+.module-library h2 {
+  font-size: 20px;
+  color: $dark-blue-1;
+  font-weight: 700;
+}
+
+.module-library-module-card {
+  height: 150px;
+}

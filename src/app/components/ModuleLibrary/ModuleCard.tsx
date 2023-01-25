@@ -34,7 +34,7 @@ export default function ModuleCard({
             <img src={PlaceHolderIcon} width="50" height="50" />
           </Col>
         </Row>
-        <Row className="justify-content-end mr-1">
+        <Row className="justify-content-end me-1">
           <Button
             onClick={() => onAddModule(moduleId)}
             variant="outline-primary"

@@ -1,0 +1,73 @@
+@use "global-variables" as *;
+@use './components/modules';
+@use './containers/admin-console';
+@import "~bootstrap/scss/bootstrap";
+
+/* 
+  ⚠️ Heads up ! Reminder!
+  Nested rules are super helpful,
+  but they can also make it hard to visualize how much CSS you’re actually generating. The deeper you nest,
+  the more bandwidth it takes to serve your CSS and the more work it takes the browser to render it. Keep those selectors shallow !
+*/
+
+*{
+  font-family: 'Lato';
+}
+.global-nav-bar {
+  background: $dark-blue-2;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: $dark-blue-1;
+  font-weight: 700;
+}
+
+h1{
+  font-size: 24px;
+}
+
+h2{
+  font-size: 20px;
+}
+
+h3{
+  font-size: 16px;
+}
+
+p{
+  font-size: 13px;
+}
+
+.section-title {
+  font-size: 20px;
+  color: $dark-blue-1;
+  font-weight: 700;
+}
+
+.guide-header-circle {
+  background-color: #FF5C39;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.guide-header-total-members {
+  font-size: 14px;
+  color: #828283;
+  align-self: end;
+}
+
+.guide-header-title {
+  color: $dark-blue-1;
+  margin-bottom: 0;
+  font-size: 24px;
+  font-weight: 700;
+}

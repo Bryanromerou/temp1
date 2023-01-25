@@ -34,7 +34,7 @@ export default function GuideHeader({
         </Col>
         <Col>
           <Row className="mb-2">
-            <h1 className="guide-header-title mr-2">
+            <h1 className="guide-header-title me-2">
               {name} {type === "team" ? "Team" : null}
             </h1>
             {type === "team" && totalMembers ? (
