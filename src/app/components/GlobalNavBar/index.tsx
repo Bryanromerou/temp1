@@ -5,6 +5,7 @@
  */
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 interface Props {}
 
@@ -14,9 +15,15 @@ export default function GlobalNavBar(props: Props) {
       <Container>
         <Navbar.Brand href="/">Criteria</Navbar.Brand>
         <Nav>
-          <Nav.Link href="/">My Dashboard</Nav.Link>
-          <Nav.Link href="/TeamGuide">My Teams</Nav.Link>
-          {/* <Nav.Link href="#pricing">Admin Console</Nav.Link> */}
+          <Nav.Link as={Link} to="/">
+            My Dashboard
+          </Nav.Link>
+          <Nav.Link as={Link} to="/TeamGuide">
+            My Teams
+          </Nav.Link>
+          <Nav.Link as={Link} to="/AdminConsole">
+            Admin Console
+          </Nav.Link>
         </Nav>
       </Container>
     </Navbar>

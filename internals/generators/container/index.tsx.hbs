@@ -73,7 +73,7 @@ const { t, i18n } = useTranslation();
 {{/if}}
 
 return (
-<>
+<Container>
   {{#if wantHeaders}}
   <Helmet>
     <title>{{properCase ComponentName}}</title>
@@ -93,7 +93,7 @@ return (
     {{else}}
   </div>
   {{/if}}
-</>
+</Container>
 );
 
 {{#if wantMemo}}

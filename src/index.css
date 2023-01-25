@@ -1,3 +1,83 @@
 .global-nav-bar{
   background: #001F4E;
 }
+
+.module-type{
+  font-weight: 700;
+  font-size: 12px;
+  text-align: right;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+}
+
+.module-type.FreeText{
+  color: #166669;
+  background: #D5F5F6;
+}
+
+.module-type.ShortList, .module-type.List{
+  color: #7F2D1C;
+  background: #FFDED7;
+}
+
+.module-type.LongList{
+  color: #6A002B;
+  background: #F7CCDD;
+}
+
+.module-title{
+  color: #202D63;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.module-title.editing{
+  background: #F5F7FC;
+  border-radius: 4px;
+  width: 100%;
+  font-size: 14px;
+  line-height: 20px;
+  padding: 8px 12px;
+}
+
+.module-library h2{
+  font-size: 20px;
+  color: #032468;
+  font-weight: 700;
+}
+
+.module-library-module-card{
+  height: 150px;
+}
+
+.section-title{
+  font-size: 20px;
+  color: #032468;
+  font-weight: 700;
+}
+
+.guide-header-circle{
+  height: 100px;
+  width: 100px;
+  background-color: #FF5C39;
+  border-radius: 50%;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.guide-header-total-members{
+  font-size: 14px;
+  color: #828283;
+  align-self: end;
+}
+
+.guide-header-title{
+  color: #202D63;
+  margin-bottom: 0;
+  font-size: 24px;
+  font-weight: 700;
+}

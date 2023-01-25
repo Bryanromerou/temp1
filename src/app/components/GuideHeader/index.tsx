@@ -25,29 +25,29 @@ export default function GuideHeader({
   };
 
   return (
-    <Card className="w-100 m-3 guide-header-card">
-      <Col>
-        <Row className="my-3">
-          <Col xs="1">
-            <div className="guide-header-circle">
-              <span>{getInitials()}</span>
-            </div>
-          </Col>
-          <Col>
-            <Row className="mb-2">
-              <h1 className="guide-header-title mr-2">
-                {name} {type === "team" ? "Team" : null}
-              </h1>
-              {type === "team" && totalMembers ? (
-                <span className="guide-header-total-members">
-                  {totalMembers} Members
-                </span>
-              ) : null}
-            </Row>
-            <Row>{description}</Row>
-          </Col>
-        </Row>
-        <Row>
+    <Card className="guide-header-card">
+      <Row className="m-3">
+        <Col xs="1">
+          <div className="guide-header-circle">
+            <span>{getInitials()}</span>
+          </div>
+        </Col>
+        <Col>
+          <Row className="mb-2">
+            <h1 className="guide-header-title mr-2">
+              {name} {type === "team" ? "Team" : null}
+            </h1>
+            {type === "team" && totalMembers ? (
+              <span className="guide-header-total-members">
+                {totalMembers} Members
+              </span>
+            ) : null}
+          </Row>
+          <Row>{description}</Row>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
           <Navbar
             bg="light"
             variant="light"
@@ -62,8 +62,8 @@ export default function GuideHeader({
               </Nav>
             </Container>
           </Navbar>
-        </Row>
-      </Col>
+        </Col>
+      </Row>
     </Card>
   );
 }

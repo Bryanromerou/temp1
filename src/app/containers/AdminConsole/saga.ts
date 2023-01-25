@@ -3,6 +3,6 @@
 
 // export function* doSomething() {}
 
-export function* cmsSaga() {
+export function* adminConsoleSaga() {
   // yield takeLatest(actions.someAction.type, doSomething);
 }
