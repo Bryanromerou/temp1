@@ -29,5 +29,5 @@ export interface ListModule extends ModuleInterface {
 export interface SectionType {
   id: string | number;
   title: string | false;
-  modules: { [sectionId: string]: ModuleInterface };
+  modules: { [moduleId: string]: ModuleInterface };
 }

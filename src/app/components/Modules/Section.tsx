@@ -67,7 +67,6 @@ export default function Section({
   };
 
   const handleSave = () => {
-    console.log("title:", title);
     onAddSection(title || false, currentModules, sectionId);
     setState(null);
   };

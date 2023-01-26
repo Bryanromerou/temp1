@@ -8,38 +8,27 @@ import React, { useState } from "react";
 import { Container, Card } from "react-bootstrap";
 import { parse } from "papaparse";
 import { getAvailableTables } from "utils/fakeDB";
-// import { useSelector, useDispatch } from 'react-redux';
-
-// import { useInjectReducer, useInjectSaga } from 'utils/redux-injectors';
-// import { reducer, sliceKey } from './slice';
-// import { selectAdminConsole } from './selectors';
-// import { adminConsoleSaga } from "./saga";
-import { ModalType, TableColumns, TableData } from "./types";
+import {
+  ModalType,
+  SelectedTable,
+  TableData,
+  TableStructureError,
+  UploadState
+} from "./types";
 import TableCard from "./TableCard";
 import Modal from "./Modal";
 
 interface Props {}
 
 export default function AdminConsole(props: Props) {
-  // useInjectReducer({ key: sliceKey, reducer: reducer });
-  //   useInjectSaga({ key: sliceKey, saga: adminConsoleSaga });
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const adminConsole = useSelector(selectAdminConsole);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const dispatch = useDispatch();
   const tables = getAvailableTables();
 
   const [modalShowing, setModalShowing] = useState<ModalType>(null);
-  const [selectedTable, setSelectedTable] = useState<{
-    tableColumns: TableColumns;
-    tableData: TableData;
-    tableName: string;
-    tableDescription: string;
-  } | null>(null);
-  const [uploadError, setUploadError] = useState<"OversizeCSV" | null>(null);
-  const [uploadingFile, setUploadingFile] = useState(false);
+  const [selectedTable, setSelectedTable] = useState<SelectedTable>(null);
+  const [uploadState, setUploadState] = useState<UploadState>(null);
   const [uploadedTable, setUploadedTable] = useState<TableData | null>(null);
+  const [structureError, setStructureError] =
+    useState<TableStructureError>(null);
 
   const onUploadDataClick = tableName => {
     if (!tables[tableName]) return null;
@@ -54,12 +43,15 @@ export default function AdminConsole(props: Props) {
 
   const hideModal = () => {
     setModalShowing(null);
+    setSelectedTable(null);
+    setUploadState(null);
+    setUploadedTable(null);
+    setStructureError(null);
   };
 
   const downloadTableCSV = tableName => {
     if (!tables[tableName]) return null;
 
-    console.log("Downloading the CSV");
     const tableData = [...tables[tableName].tableData];
     tableData.unshift(tables[tableName].tableColumns);
     downloadCSV(tableName, tableData);
@@ -121,15 +113,14 @@ export default function AdminConsole(props: Props) {
 
   // Validating csv upload, checking header and setting new users in state
   const handleUpload = event => {
-    // let headers = [];
-    setUploadingFile(true);
+    setUploadState("Uploading");
 
     const uploadFileIsCSV =
       event.target.files.length > 0 &&
       /.+(.csv)$/.test(event.target.files[0].name);
 
     if (uploadFileIsCSV && event.target.files[0].size > 5 * 1024 * 1024) {
-      setUploadError("OversizeCSV");
+      setUploadState("UploadingError");
     } else if (uploadFileIsCSV) {
       parse(event.target.files[0], {
         delimiter: "",
@@ -153,10 +144,10 @@ export default function AdminConsole(props: Props) {
 
   const checkTableStructure = ({ data, meta: { fields } }) => {
     if (!selectedTable) {
-      setUploadError("OversizeCSV"); // Should change upload error.
+      setUploadState("Error"); // Should change upload error.
       return;
     }
-
+    setUploadState("Checking");
     const mismatchPositions: number[] = [];
     selectedTable.tableColumns.forEach((columnHeader, idx) => {
       if (columnHeader !== fields[idx]) {
@@ -164,15 +155,19 @@ export default function AdminConsole(props: Props) {
       }
     });
 
+    // If there are no mismatching column names, then we set the state to success and save the data the is being uploaded to our state.
     if (mismatchPositions.length === 0) {
-      console.log("matching");
+      setUploadState("CheckingSuccess");
+      setUploadedTable(data);
     } else {
-      console.log("Sorry does not match");
+      // Or else we set the structure error, so that the user is able to see which rows are not matching
+      setStructureError({
+        existingColumns: selectedTable.tableColumns,
+        uploadedColumns: fields,
+        mismatchPositions
+      });
+      setUploadState("CheckingError");
     }
-    console.log("selectedTable:", selectedTable.tableColumns);
-    console.log(fields);
-
-    setUploadedTable(data);
   };
 
   const getTableCards = () =>
@@ -198,6 +193,8 @@ export default function AdminConsole(props: Props) {
         onHide={hideModal}
         selectedTable={selectedTable}
         handleUpload={handleUpload}
+        structureError={structureError}
+        uploadState={uploadState}
       />
       <Card className="m-4 p-4">
         <h1>Admin Console</h1>

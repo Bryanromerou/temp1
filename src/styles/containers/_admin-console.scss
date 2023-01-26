@@ -5,6 +5,10 @@
   min-width: 116px;
 }
 
+.admin-console-table-header.warning{
+  background: $yellow-20;
+}
+
 .admin-console-table-card{
   .preview-toggle {
     color: $dark-blue-3;
