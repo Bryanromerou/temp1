@@ -5,23 +5,26 @@
  */
 import React from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import PlaceHolderIcon from "resources/images/Criteria-Logo.png";
 
 interface Props {}
 
 export default function GlobalNavBar(props: Props) {
   return (
     <Navbar className="global-nav-bar" variant="dark">
-      <Container>
-        <Navbar.Brand href="/">Criteria</Navbar.Brand>
+      <Container fluid>
+        <Navbar.Brand href="/">
+          <img src={PlaceHolderIcon} alt="Criteria" />
+        </Navbar.Brand>
         <Nav>
-          <Nav.Link as={Link} to="/">
+          <Nav.Link as={NavLink} to="/">
             My Dashboard
           </Nav.Link>
-          <Nav.Link as={Link} to="/TeamGuide">
+          <Nav.Link as={NavLink} to="/TeamGuide">
             My Teams
           </Nav.Link>
-          <Nav.Link as={Link} to="/AdminConsole">
+          <Nav.Link as={NavLink} to="/AdminConsole">
             Admin Console
           </Nav.Link>
         </Nav>

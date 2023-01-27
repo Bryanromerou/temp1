@@ -1,7 +1,5 @@
 @use "global-variables" as *;
-@use './components/modules';
-@use './containers/admin-console';
-@import "~bootstrap/scss/bootstrap";
+@use './imports';
 
 /* 
   ⚠️ Heads up ! Reminder!
@@ -12,9 +10,6 @@
 
 *{
   font-family: 'Lato';
-}
-.global-nav-bar {
-  background: $dark-blue-2;
 }
 
 h1,
