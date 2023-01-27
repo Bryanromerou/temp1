@@ -57,7 +57,7 @@ export default function TableCard({
         </th>
       );
 
-      if (copy) {
+      if (warning && copy) {
         copy.shift();
       }
     });
@@ -95,6 +95,7 @@ export default function TableCard({
     }
     const { existingColumns, uploadedColumns, mismatchPositions } =
       structureError;
+    console.log("mismatchPositions:", mismatchPositions);
     const existingHeaders = getTableHeaders(existingColumns, mismatchPositions);
     const uploadedHeaders = getTableHeaders(uploadedColumns, mismatchPositions);
 
@@ -171,7 +172,7 @@ export default function TableCard({
   };
 
   return (
-    <Card className="admin-console-table-card p-3">
+    <Card className="admin-console-table-card p-3 mb-3">
       {/* <span>{tagName}</span> */}
       <h3>{tableName}</h3>
       {getUploadStateComponent()}

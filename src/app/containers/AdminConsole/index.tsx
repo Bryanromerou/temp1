@@ -17,6 +17,7 @@ import {
   ParsedTableData,
   TableResponse,
   UpdatedTableResponse,
+  PutTIAssessmentItemsPayload,
   TableColumns
 } from "./types";
 import TableCard from "./TableCard";
@@ -29,19 +30,20 @@ export default function AdminConsole(props: Props) {
 
   // This use lay out effect is here to replicate the call the the endpoint and the data refactoring we do to make the data show.
   useLayoutEffect(() => {
-    const temp = getAvailableTableFromApi();
-    if (!temp?.tables) {
+    const fakeResponse = getAvailableTableFromApi();
+    if (!fakeResponse?.tables) {
       return;
     }
 
     const incomingTables: { [tableName: string]: UpdatedTableResponse } = {};
-    temp.tables.forEach(tableResponse => {
+    fakeResponse.tables.forEach(tableResponse => {
       const [tableColumns, tableData] = parseTableData(tableResponse);
       const updatedResponse = { ...tableResponse, tableData, tableColumns };
       incomingTables[tableResponse.name] = updatedResponse;
     });
 
     setParsedTableData(incomingTables);
+    console.log("The mock response object is:", fakeResponse);
   }, []);
 
   const [modalShowing, setModalShowing] = useState<ModalType>(null);
@@ -77,6 +79,26 @@ export default function AdminConsole(props: Props) {
     return [columns, data];
   };
 
+  const createPayloadFromState = (
+    tableData: TableData,
+    tableColumns: TableColumns
+  ): PutTIAssessmentItemsPayload | null => {
+    if (!tableData || !tableColumns) {
+      return null;
+    }
+    const payload: PutTIAssessmentItemsPayload = [];
+
+    tableData.forEach(row => {
+      const payloadObject = {};
+      row.forEach((dataElm, idx) => {
+        payloadObject[tableColumns[idx]] = dataElm;
+      });
+      payload.push(payloadObject);
+    });
+
+    return payload;
+  };
+
   const onUploadDataClick = tableName => {
     if (parsedTableData === null || !parsedTableData[tableName]) return null;
     setModalShowing("UploadData");
@@ -86,6 +108,20 @@ export default function AdminConsole(props: Props) {
       tableName: parsedTableData[tableName].name,
       tableDescription: parsedTableData[tableName].description
     });
+  };
+
+  const onSendData = () => {
+    if (!selectedTable) return;
+
+    setUploadState("Sending");
+
+    const payload = createPayloadFromState(
+      selectedTable.tableData,
+      selectedTable.tableColumns
+    );
+
+    console.log("The payload we are sending to the endpoint is: ", payload);
+    setUploadState("SendingSuccess");
   };
 
   const hideModal = () => {
@@ -245,6 +281,7 @@ export default function AdminConsole(props: Props) {
         handleUpload={handleUpload}
         structureError={structureError}
         uploadState={uploadState}
+        onSendData={onSendData}
       />
       <Card className="m-4 p-4">
         <h1>Admin Console</h1>

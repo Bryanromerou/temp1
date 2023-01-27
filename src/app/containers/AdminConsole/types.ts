@@ -23,9 +23,9 @@ export type UpdatedTableResponse = TableResponse & {
   tableColumns: TableColumns;
 };
 
-// export type PutTIAssessmentItemsPayload = {
-//   [columnName: string]: string | number;
-// }[];
+export type PutTIAssessmentItemsPayload = {
+  [columnName: string]: string | number;
+}[];
 
 export type ModalType = "UploadData" | null;
 export type TableColumns = string[];

@@ -3374,6 +3374,17 @@ export const getAvailableTableFromApi = () => {
         description: "lorem impsom",
         tags: '["lorem ipsom"]',
         content: fakeTableData2
+      },
+      {
+        name: "factors1",
+        description: "lorem impsom",
+        tags: '["lorem ipsom"]',
+        content: [
+          {
+            factorId: "15",
+            name: "New Factor"
+          }
+        ]
       }
     ]
   };

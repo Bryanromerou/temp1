@@ -27,6 +27,7 @@ interface Props {
   handleUpload: (handleUpload) => void;
   structureError: TableStructureError;
   uploadState: UploadState;
+  onSendData: () => void;
 }
 
 export default function Modal({
@@ -35,7 +36,8 @@ export default function Modal({
   selectedTable,
   handleUpload,
   structureError,
-  uploadState
+  uploadState,
+  onSendData
 }: Props) {
   const getModalContent = () => {
     switch (modalToShow) {
@@ -112,10 +114,22 @@ export default function Modal({
           />
         )}
         <div className="mt-2">
-          <Button className="me-2" disabled={uploadState !== "CheckingSuccess"}>
+          <Button
+            className="me-2"
+            disabled={uploadState !== "CheckingSuccess"}
+            onClick={() => {
+              onSendData();
+            }}
+          >
             Upload Data
           </Button>
-          <Button variant="outline-primary" className="me-2">
+          <Button
+            variant="outline-primary"
+            className="me-2"
+            onClick={() => {
+              onHide();
+            }}
+          >
             Cancel
           </Button>
         </div>
