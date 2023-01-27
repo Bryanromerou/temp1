@@ -73,7 +73,11 @@ export default function TableCard({
         return (
           <p>
             All column names match
-            <FontAwesomeIcon icon={faCheckCircle} color="green" />
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              color="green"
+              className="ms-2"
+            />
           </p>
         );
       case "UploadingError":

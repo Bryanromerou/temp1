@@ -4,16 +4,20 @@
  *
  */
 
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Container, Card } from "react-bootstrap";
 import { parse } from "papaparse";
-import { getAvailableTables } from "utils/fakeDB";
+import { getAvailableTables, getAvailableTableFromApi } from "utils/fakeDB";
 import {
   ModalType,
   SelectedTable,
   TableData,
   TableStructureError,
-  UploadState
+  UploadState,
+  ParsedTableData,
+  TableResponse,
+  UpdatedTableResponse,
+  TableColumns
 } from "./types";
 import TableCard from "./TableCard";
 import Modal from "./Modal";
@@ -21,7 +25,24 @@ import Modal from "./Modal";
 interface Props {}
 
 export default function AdminConsole(props: Props) {
-  const tables = getAvailableTables();
+  const [parsedTableData, setParsedTableData] = useState<ParsedTableData>(null);
+
+  // This use lay out effect is here to replicate the call the the endpoint and the data refactoring we do to make the data show.
+  useLayoutEffect(() => {
+    const temp = getAvailableTableFromApi();
+    if (!temp?.tables) {
+      return;
+    }
+
+    const incomingTables: { [tableName: string]: UpdatedTableResponse } = {};
+    temp.tables.forEach(tableResponse => {
+      const [tableColumns, tableData] = parseTableData(tableResponse);
+      const updatedResponse = { ...tableResponse, tableData, tableColumns };
+      incomingTables[tableResponse.name] = updatedResponse;
+    });
+
+    setParsedTableData(incomingTables);
+  }, []);
 
   const [modalShowing, setModalShowing] = useState<ModalType>(null);
   const [selectedTable, setSelectedTable] = useState<SelectedTable>(null);
@@ -30,14 +51,40 @@ export default function AdminConsole(props: Props) {
   const [structureError, setStructureError] =
     useState<TableStructureError>(null);
 
+  const parseTableData = (
+    tableResponse: TableResponse
+  ): [tableColumns: TableColumns, tableData: TableData] => {
+    const columns: TableColumns = [];
+    const data: TableData = [];
+
+    if (!tableResponse) {
+      return [columns, data];
+    }
+    tableResponse.content.forEach((rowObj, idx) => {
+      const row: string[] = [];
+      if (idx === 0) {
+        Object.entries(rowObj).forEach(([columnName, rowData]) => {
+          columns.push(columnName);
+          row.push(rowData);
+        });
+      } else {
+        Object.values(rowObj).forEach(rowData => {
+          row.push(rowData);
+        });
+      }
+      data.push(row);
+    });
+    return [columns, data];
+  };
+
   const onUploadDataClick = tableName => {
-    if (!tables[tableName]) return null;
+    if (parsedTableData === null || !parsedTableData[tableName]) return null;
     setModalShowing("UploadData");
     setSelectedTable({
-      tableColumns: tables[tableName].tableColumns,
-      tableData: tables[tableName].tableData,
-      tableName: tables[tableName].tableName,
-      tableDescription: tables[tableName].tableDescription
+      tableColumns: parsedTableData[tableName].tableColumns,
+      tableData: parsedTableData[tableName].tableData,
+      tableName: parsedTableData[tableName].name,
+      tableDescription: parsedTableData[tableName].description
     });
   };
 
@@ -50,10 +97,12 @@ export default function AdminConsole(props: Props) {
   };
 
   const downloadTableCSV = tableName => {
-    if (!tables[tableName]) return null;
+    if (parsedTableData === null || !parsedTableData[tableName]) return null;
 
-    const tableData = [...tables[tableName].tableData];
-    tableData.unshift(tables[tableName].tableColumns);
+    const tableData = [
+      parsedTableData[tableName].tableColumns,
+      ...parsedTableData[tableName].tableData
+    ];
     downloadCSV(tableName, tableData);
   };
 
@@ -171,12 +220,13 @@ export default function AdminConsole(props: Props) {
   };
 
   const getTableCards = () =>
-    Object.values(tables).map(
-      ({ tableName, tableDescription, tableColumns, tableData }, idx) => (
+    parsedTableData &&
+    Object.values(parsedTableData).map(
+      ({ name, description, tableColumns, tableData }, idx) => (
         <TableCard
           // tagName={tagName}
-          tableName={tableName}
-          tableDescription={tableDescription}
+          tableName={name}
+          tableDescription={description}
           tableColumns={tableColumns}
           onUploadClick={onUploadDataClick}
           tableData={tableData}
