@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/teaming-v2/static/css/main.e2405519.css",
-    "main.js": "/teaming-v2/static/js/main.b00c3e9d.js",
+    "main.js": "/teaming-v2/static/js/main.6b493d6c.js",
     "static/js/787.dc098455.chunk.js": "/teaming-v2/static/js/787.dc098455.chunk.js",
     "index.html": "/teaming-v2/index.html",
     "main.e2405519.css.map": "/teaming-v2/static/css/main.e2405519.css.map",
-    "main.b00c3e9d.js.map": "/teaming-v2/static/js/main.b00c3e9d.js.map",
+    "main.6b493d6c.js.map": "/teaming-v2/static/js/main.6b493d6c.js.map",
     "787.dc098455.chunk.js.map": "/teaming-v2/static/js/787.dc098455.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e2405519.css",
-    "static/js/main.b00c3e9d.js"
+    "static/js/main.6b493d6c.js"
   ]
 }
