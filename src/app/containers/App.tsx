@@ -7,7 +7,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 
 // Temporary Work
-const tempPassword = "TIGER_TEAM";
+const tempPassword = process.env.REACT_APP_TEMP_PASSWORD;
 
 export default function App() {
   // -------- Temporary Work  -----
@@ -30,13 +30,14 @@ export default function App() {
         <>
           <GlobalNavBar />
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path={"/"} element={<Dashboard />} />
+            <Route path="/teaming-v2" element={<Dashboard />} />
             <Route path="/AdminConsole" element={<AdminConsole />} />
             <Route path="/TeamGuide" element={<TeamGuide />} />
             {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
               routes for. */}
-            <Route path="*" element={<div>404 Page Not Found</div>} />
+            <Route path="*" element={<div>404: Page Not Found</div>} />
           </Routes>
         </>
       ) : (
